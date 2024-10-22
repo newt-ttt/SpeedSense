@@ -1,0 +1,6 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+secret_tokens.py
+db.sqlite3
+/templates/WebApp/table.html
