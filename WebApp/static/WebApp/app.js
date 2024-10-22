@@ -1,5 +1,4 @@
 let intro = document.querySelector('.intro');
-let logo = document.querySelector('.logo-header');
 let logoSpan = document.querySelectorAll('.logo');
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -16,7 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 setTimeout(() => {
                     span.classList.remove('active');
-                    span.classlist.add('fade');
+                    span.classList.add('fade');
                 }, (idx + 1) * 50)
             })
         }, 2000);
@@ -27,3 +26,4 @@ window.addEventListener('DOMContentLoaded', () => {
 
     })
 })
+

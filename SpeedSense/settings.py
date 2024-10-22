@@ -11,7 +11,15 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from secret_tokens import DJANGO_SECRET_KEY
+from django.core.management.utils import get_random_secret_key
+
+# Regenerate the secret key for the first runtime
+with open('secret_tokens.py', 'a') as f:
+    try:
+        from secret_tokens import DJANGO_SECRET_KEY
+    except:
+        DJANGO_SECRET_KEY = get_random_secret_key()
+        f.write(f"DJANGO_SECRET_KEY='{DJANGO_SECRET_KEY}'")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

@@ -10,23 +10,21 @@
 
     </head>
     <body>
+    <p id="url"></p>
       <!--Background Gradient-->
       <div class="bg">
-        <div class="intro">
-          <h1 class="logo-header">
-              <span class="logo">Speed</span><span class="logo">&nbsp;Sense</span>
-          </h1>
-        </div>
-
-        <script src="{% static 'WebApp/app.js' %}"></script>
 
         <div class="navbar">
-          <h2>Speed Sense<h2>
-          <a href="">Home</a>
-          <a href="#Setup">Setup</a>
-          <a href="/Analysis">Analysis</a>
-          <a href="#AboutUs">About Us</a>
-        </div> 
+            <h2>Speed Sense<h2>
+            <a href="http://localhost:8000">Home</a>
+            <a href="#Setup">Setup</a>
+            <a href="">Analysis</a>
+            <a href="#AboutUs">About Us</a>
+          </div> 
+        <div class="table">
+            <!--Table-->
+            {% include 'WebApp/table.html' %}
+        </div>
       </div>
     </body>
 </html>

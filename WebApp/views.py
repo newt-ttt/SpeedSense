@@ -27,13 +27,20 @@ def save(request):
         return HttpResponse("There has been an error processing your request")
 
         
-def index(request):
+def index(request, resource=None):
     index_template = loader.get_template('WebApp/index.html')
-    # change context to provide variables to the template
     context = {}
-    if not os.path.exists("listen/table.html"):
-        generate_table()
-    return HttpResponse(index_template.render(context, request ))
+
+    # change context to provide variables to the template
+    if not resource:
+        return HttpResponse(index_template.render(context, request))
+    elif resource=="Analysis":
+        
+        if not os.path.exists("WebApp/table.html"):
+            generate_table()
+            
+        return HttpResponse(loader.get_template('WebApp/analysis.html').render(context, request))
+
 
 def generate_table():
     # If the database is not empty:
@@ -51,9 +58,3 @@ def generate_table():
         with open('WebApp/templates/WebApp/table.html', "w") as f:
             f.close()
     return
-
-def logo(request):
-    logopage = loader.get_template('WebApp/logopage.html')
-    # change context to provide variables to the template
-    context = {}
-    return HttpResponse(logopage.render(context, request))
