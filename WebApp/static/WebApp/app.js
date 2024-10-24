@@ -1,9 +1,10 @@
 let intro = document.querySelector('.intro');
 let logoSpan = document.querySelectorAll('.logo');
+let logoheader = document.querySelector('.logo-header');
 
 window.addEventListener('DOMContentLoaded', () => {
+    intro.classList.add('show');
     setTimeout(() => {
-
         logoSpan.forEach((span, idx) => {
             setTimeout(() => {
                 span.classList.add('active');
@@ -26,4 +27,3 @@ window.addEventListener('DOMContentLoaded', () => {
 
     })
 })
-

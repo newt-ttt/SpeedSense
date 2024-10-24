@@ -29,17 +29,18 @@ def save(request):
         
 def index(request, resource=None):
     index_template = loader.get_template('WebApp/index.html')
-    context = {}
-
+    context={"show_splash": False, "resource": resource}
+    
     # change context to provide variables to the template
     if not resource:
+        context["show_splash"] = True
         return HttpResponse(index_template.render(context, request))
-    elif resource=="Analysis":
         
+    elif resource=="Analysis":
         if not os.path.exists("WebApp/table.html"):
             generate_table()
-            
-        return HttpResponse(loader.get_template('WebApp/analysis.html').render(context, request))
+
+    return HttpResponse(index_template.render(context, request))
 
 
 def generate_table():
@@ -52,6 +53,8 @@ def generate_table():
         fig = go.Figure(data=[go.Table(header=dict(values=['Instance ID', 'Speed', 'Time Recorded', 'Custom Text']),
                         cells=dict(values=[ids, speeds, dates, text]))
                         ])
+        fig.update_layout(plot_bgcolor='rgba(0,0,0,0)',
+                          paper_bgcolor='rgba(0,0,0,0)')
         fig.write_html('WebApp/templates/WebApp/table.html', full_html=False, include_plotlyjs='cdn')
     else:
         # This makes us not throw an error if we try to open the index page w/ nothing in the DB

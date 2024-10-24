@@ -20,7 +20,8 @@ header h4 {
     font-size: 1.6rem;
 }
 
-body, html {
+body,
+html {
     height: 100%;
     margin: 0;
 }
@@ -30,16 +31,14 @@ svg.main-svg {
 }
 
 .bg {
-/* The image used */
-background-image: linear-gradient(#161616, #000e1f);
-
-/* Full height */
-height: 100%; 
-
-/* Center and scale the image nicely */
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
+    /* The image used */
+    background-image: linear-gradient(#161616, #000e1f);
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .intro {
@@ -51,10 +50,11 @@ background-size: cover;
     height: 100vh;
     background-color: #161616;
     transition: 1s;
+    opacity: 1;
 }
 
-.intro.hide {
-    opacity: 0;
+.intro.show {
+    opacity: 1;
 }
 
 .logo-header {
@@ -65,12 +65,20 @@ background-size: cover;
     color: #ffffff
 }
 
+.logo-header.hide {
+    opacity: 0;
+}
+
+.logo-header.show {
+    opacity: 1;
+}
+
 .logo {
     position: relative;
     display: inline-block;
     bottom: -20px;
     opacity: 0;
-    font-size: 70px;
+    font-size: 100%;
 }
 
 .logo.active {
@@ -89,68 +97,89 @@ background-size: cover;
     opacity: 0;
 }
 
+.main-svg {
+    background: none;
+}
+
 .navbar {
-overflow: hidden;
-background-color: #161616;
-font-family: "Poppins", sans-serif;
-bottom: 0px;
+    overflow: hidden;
+    background-color: #161616;
+    font-family: "Poppins", sans-serif;
+    bottom: 0px;
+    width: 100vw;
+    display: flex;
+    /* Flexbox for horizontal alignment */
+    justify-content: space-between;
+    /* Space between items */
+    /* Vertical centering */
+    padding: 0px 0px;
+    flex-wrap: wrap;
+    align-items: center;
 }
+
 .navbar h2 {
-float: left;
-font-size: 32px;
-color: white;
-text-align: center;
-vertical-align: middle;
-padding: 10px 12px;
-text-decoration: none;
-
+    font-size: 200%;
+    height: 80%;
+    width: 20%;
+    color: white;
+    margin: 10px 5px;
+    bottom: 5%;
 }
+
 .navbar a {
-float: left;
-font-size: 22px;
-color: white;
-text-align: center;
-padding: 10px 16px;
-text-decoration: none;
-transition: ease-in 0.15s;
+    height: 80%;
+    width: 10%;
+    font-size: 1.5em;
+    color: white;
+    /* Adjust padding for spacing */
+    text-decoration: none;
+    transition: ease-in 0.15s;
+    flex-grow: 1;
+    /* Allow links to grow equally */
+    display: block;
+    text-align: center;
 }
 
-.navbar a:hover{
+.navbar a:hover {
     color: #0059CB;
     transition: ease-in 0.15s;
 }
 
 .dropdown-content {
-display: none;
-position: absolute;
-background-color: #f9f9f9;
-width: 100%;
-left: 0;
-box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-z-index: 1;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 100%;
+    left: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
 
 .dropdown-content .header {
-background: red;
-padding: 16px;
-color: white;
+    background: red;
+    padding: 16px;
+    color: white;
 }
 
 .dropdown:hover .dropdown-content {
-display: block;
+    display: block;
 }
+
 
 /* Clear floats after the columns */
+
 .row:after {
-content: "";
-display: table;
-clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
+
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+
 @media screen and (max-width: 600px) {
-.column {
-    width: 100%;
-    height: auto;
-}
+    .column {
+        width: 100%;
+        height: auto;
+    }
 }

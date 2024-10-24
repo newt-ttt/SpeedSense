@@ -12,6 +12,7 @@
     <body>
       <!--Background Gradient-->
       <div class="bg">
+        {% if show_splash %}
         <div class="intro">
           <h1 class="logo-header">
               <span class="logo">Speed</span><span class="logo">&nbsp;Sense</span>
@@ -19,14 +20,22 @@
         </div>
 
         <script src="{% static 'WebApp/app.js' %}"></script>
+        {% endif %}
 
         <div class="navbar">
-          <h2>Speed Sense<h2>
-          <a href="">Home</a>
-          <a href="#Setup">Setup</a>
+          <h2>Speed Sense</h2>
+          <a href="/Home">Home</a>
+          <a href="/Setup">Setup</a>
           <a href="/Analysis">Analysis</a>
-          <a href="#AboutUs">About Us</a>
+          <a href="/AboutUs">About Us</a>
         </div> 
+
+        {% if resource == "Analysis" %}
+          <div class="table">
+            <!--Table-->
+            {% include 'WebApp/table.html' %}
+          </div>
+        {% endif %}
       </div>
     </body>
 </html>
