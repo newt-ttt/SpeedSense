@@ -1,6 +1,9 @@
 INSTRUCTIONS
 
 Preface: Don't worry if you don't have a secret_tokens.py file yet -- it will be generated on the first run of the server
+Once you've opened your terminal, cd to SpeedSense
+
+Prerequisite: run 'python -m pip install -r requirements.txt'
 
 First, run 'python manage.py makemigrations WebApp'
 then, 'python manage.py migrate'
