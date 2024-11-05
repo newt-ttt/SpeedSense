@@ -7,3 +7,4 @@ WebApp/templates/WebApp/table.html
 secret_tokens.py
 db.sqlite3
 migrations/
+host.bat
