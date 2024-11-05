@@ -9,3 +9,4 @@ First, run 'python manage.py makemigrations WebApp'
 then, 'python manage.py migrate'
 then, 'python manage.py runserver'
 and the server will be running and accessible on http://localhost:8000 by default!
+run 'host.bat' to make the server accessible on speedsense.pagekite.me
