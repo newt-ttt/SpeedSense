@@ -9,4 +9,9 @@ First, run 'python manage.py makemigrations WebApp'
 then, 'python manage.py migrate'
 then, 'python manage.py runserver'
 and the server will be running and accessible on http://localhost:8000 by default!
-run 'host.bat' to make the server accessible on speedsense.pagekite.me
+
+To tunnel with pagekite:
+Download 'pagekite.py' from pagekite
+Add your credentials to your pagekite installation (see pagekite documentation)
+Modify 'host.bat' to point to the location of your 'pagekite.py' file
+Run 'host.bat' to make the server accessible at 'speedsense.pagekite.me'
