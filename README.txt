@@ -11,6 +11,7 @@ then, 'python manage.py runserver'
 and the server will be running and accessible on http://localhost:8000 by default!
 
 To tunnel with pagekite:
-download 'pagekite.py' from pagekite
-modify 'host.bat' to point to the location of your 'pagekite.py' file
-run 'host.bat' to make the server accessible at 'speedsense.pagekite.me'
+Download 'pagekite.py' from pagekite
+Add your credentials to your pagekite installation (see pagekite documentation)
+Modify 'host.bat' to point to the location of your 'pagekite.py' file
+Run 'host.bat' to make the server accessible at 'speedsense.pagekite.me'
