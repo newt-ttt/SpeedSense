@@ -3,7 +3,7 @@ __pycache__/
 SpeedSense/__pycache__
 WebApp/__pycache__
 
+WebApp/templates/WebApp/table.html
 secret_tokens.py
 db.sqlite3
-/templates/WebApp/table.html
 migrations/

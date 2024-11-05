@@ -1,1 +1,1 @@
-C:/Users/alexj/OneDrive/Desktop/pagekite.py --fe_nocertcheck 8000 speedsense.pagekite.me
+C:/Users/derpy/Desktop/pagekite.py --fe_nocertcheck 8000 speedsense.pagekite.me
