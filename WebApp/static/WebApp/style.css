@@ -26,8 +26,13 @@ html {
     margin: 0;
 }
 
-svg.main-svg {
-    background: inherit;
+.emptydb_error {
+    margin-top: 20%;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 2.5em;
+    color: white;
 }
 
 .bg {
@@ -99,6 +104,9 @@ svg.main-svg {
 
 .main-svg {
     background: none;
+}
+.graph {
+    pointer-events: none;
 }
 
 .navbar {
