@@ -8,7 +8,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import os
 
-plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': True}
+
 
 def ping(request):
     return HttpResponse("pong")
@@ -54,9 +54,10 @@ def index(request, resource=None):
 
 
 def generate_table():
+    plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': False}
     # format all speed info into values and cells to make table
-    sorted_speeds = VehicleInstance.objects.order_by("-id")
-    dates, ids, text = zip(*[(s.date, s.id, str(s.custom_text)) for s in sorted_speeds])
+    sorted_speeds = VehicleInstance.objects.order_by("-date")[:100]
+    dates, ids, text = zip(*[(format_date(s.date), s.id, str(s.custom_text)) for s in sorted_speeds])
     
     speeds = [s.speeds.split(" ") for s in sorted_speeds]
     avg_speeds = [round(sum(float(s) for s in speed)/len(speed), 1) for speed in speeds]
@@ -77,6 +78,7 @@ def generate_table():
     return
 
 def generate_frequency_graph():
+    plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': True}
     freq_by_hour = {"00":0,"01":0,"02":0,"03":0,"04":0,"05":0,"06":0,"07":0,"08":0,"09":0,"10":0,"11":0, 
                     "12":0,"13":0,"14":0,"15":0,"16":0,"17":0,"18":0,"19":0,"20":0,"21":0,"22":0,"23":0}
     
@@ -116,3 +118,21 @@ def regenerate_analysis():
     else:
         # This makes us not throw an error if we try to open the index page w/ nothing in the DB
         return 0
+
+def format_date(date: datetime.datetime):
+    ampm = "PM" if date.hour//12 else "AM"
+    if date.hour%12 ==0:
+        hour=12
+    else:
+        hour=date.hour%12
+        
+    if len(str(date.minute)) == 1:
+        minute = "0"+str(date.minute)
+    else:
+        minute=date.minute
+        
+    if len(str(date.second)) == 1:
+        second = "0"+str(date.second)
+    else:
+        second=date.second
+    return f'{date.month}-{date.day}-{date.year} {hour}:{minute}:{second} {ampm}'
