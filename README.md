@@ -132,6 +132,17 @@ To run this application, you'll need Python. You can download the latest version
    ```
 By default, the server will start locally at http://127.0.0.1:8000/
 
+### Tunneling (Irrelevant in final version)
+To tunnel with pagekite, we provided the host.bat file in order to make things easier:
+
+1. Download 'pagekite.py' from pagekite
+
+2. Add your credentials to your pagekite installation (see pagekite documentation)
+
+3. Modify 'host.bat' to point to the location of your 'pagekite.py' file
+
+4. Run 'host.bat' to make the server accessible at 'speedsense.pagekite.me'
+
 
 ### Communicating with a Speed Sense device
 1. Not yet implemented
