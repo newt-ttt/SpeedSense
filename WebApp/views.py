@@ -17,9 +17,9 @@ def save(request):
     if request.method != "POST": return HttpResponse("Please use POST")
     try:
         # \\r\\n seems to work as a divider wehn sending tests from Postman, this might have to change when recieving actual data from the microcontroller
-        speed_instances = str(request.body)[2:-1].split('\\r\\n')
+        speed_instances = str(request.body)[2:-1].split('\\n')
         for instance in speed_instances:
-            
+            #print(instance)
             date_str = instance.partition(" ")[0].split("-")
             if date_str[0] == '': continue# Last line of the text file tends to cause issues, ignore invalid ones
 
@@ -82,7 +82,7 @@ def generate_frequency_graph():
     freq_by_hour = {"00":0,"01":0,"02":0,"03":0,"04":0,"05":0,"06":0,"07":0,"08":0,"09":0,"10":0,"11":0, 
                     "12":0,"13":0,"14":0,"15":0,"16":0,"17":0,"18":0,"19":0,"20":0,"21":0,"22":0,"23":0}
     
-    for instance in VehicleInstance.objects.all():
+    for instance in VehicleInstance.objects.order_by("-date")[:100]:
         hour = str(instance.date.hour)
         if len(hour) == 1:
             hour="0"+hour
@@ -107,6 +107,37 @@ def generate_frequency_graph():
     fig.write_html('WebApp/templates/WebApp/frequency_graph.html', config=plotlyconfig, full_html=False, include_plotlyjs='cdn')
     return
 
+def generate_delta_speed_graph():
+    plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': False}
+    
+    sorted_speeds = VehicleInstance.objects.order_by("-date")[:100]
+    speeds = [s.speeds.split(" ") for s in sorted_speeds]
+    speeds = [[float(s) for s in speed] for speed in speeds]
+    max_speeds = [round(max(speed), 1) for speed in speeds]
+    delta_speeds = [round(max(speed)-min(speed), 1) for speed in speeds]
+    
+    print(max_speeds)
+    print(delta_speeds)
+    
+    fig = go.Figure(go.Bar(
+    x=max_speeds,
+    y=delta_speeds,
+    marker_color= '#0059CB'  # Bar color
+    ))
+    
+    fig.update_layout(
+    title="Vehicle Changes in Speed",
+    xaxis_title="Maximum Speed",
+    yaxis_title="Change in speed",
+    #xaxis=dict(tickmode="array", tickvals=list(freq_by_hour.keys())),
+    template='plotly_dark',
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='rgba(0,0,0,0)'
+    )
+        
+    fig.write_html('WebApp/templates/WebApp/delta_speed_graph.html', config=plotlyconfig, full_html=False, include_plotlyjs='cdn')
+    return
+
 def regenerate_analysis():
     # If the database is not empty:
     if VehicleInstance.objects.all().count() != 0:
@@ -114,6 +145,8 @@ def regenerate_analysis():
         generate_table()
         # Generate graph of vehicle detection frequencies
         generate_frequency_graph()
+        
+        generate_delta_speed_graph()
         return 1
     else:
         # This makes us not throw an error if we try to open the index page w/ nothing in the DB
