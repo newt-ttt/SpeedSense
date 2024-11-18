@@ -9,4 +9,3 @@ WebApp/templates/WebApp/delta_speed_graph.html
 secret_tokens.py
 db.sqlite3
 migrations/
-host.bat
