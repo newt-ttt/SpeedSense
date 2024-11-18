@@ -137,13 +137,13 @@ By default, the server will start locally at http://127.0.0.1:8000/
 ### Tunneling (Irrelevant in final version)
 To tunnel with pagekite, we provided the host.bat file in order to make things easier:
 
-1. Download 'pagekite.py' from pagekite
+1. Download 'pagekite.py' from pagekite & place it in the same directory as the root SpeedSense folder (NOT INSIDE IT)
 
 2. Add your credentials to your pagekite installation (see pagekite documentation)
 
-3. Modify 'host.bat' to point to the location of your 'pagekite.py' file
+3. (OPTIONAL) Modify 'host.bat' to point to your own pagekite URL
 
-4. Run 'host.bat' to make the server accessible at 'speedsense.pagekite.me'
+4. Run '.\host.bat' to make the server accessible at 'speedsense.pagekite.me' (Or your own pagekite URL)
 
 
 ### Communicating with a Speed Sense device
