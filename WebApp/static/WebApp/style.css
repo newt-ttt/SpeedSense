@@ -5,14 +5,6 @@
     font-family: "Poppins", sans-serif;
 }
 
-header {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 1005;
-    height: 80px;
-}
-
 header h4 {
     position: absolute;
     left: 10%;
@@ -115,7 +107,7 @@ html {
     background-color: #161616;
     font-family: "Poppins", sans-serif;
     bottom: 0px;
-    width: 100vw;
+    max-width: 100%;
     display: flex;
     /* Flexbox for horizontal alignment */
     justify-content: space-between;
@@ -137,13 +129,13 @@ html {
 
 .navbar a {
     height: 80%;
-    width: 10%;
+    width: 5%;
     font-size: 1.5em;
     color: white;
     /* Adjust padding for spacing */
     text-decoration: none;
     transition: ease-in 0.15s;
-    flex-grow: 1;
+    flex-grow: 0.8;
     /* Allow links to grow equally */
     display: block;
     text-align: center;
@@ -152,43 +144,4 @@ html {
 .navbar a:hover {
     color: #0059CB;
     transition: ease-in 0.15s;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    width: 100%;
-    left: 0;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.dropdown-content .header {
-    background: red;
-    padding: 16px;
-    color: white;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-
-/* Clear floats after the columns */
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-
-@media screen and (max-width: 600px) {
-    .column {
-        width: 100%;
-        height: auto;
-    }
 }

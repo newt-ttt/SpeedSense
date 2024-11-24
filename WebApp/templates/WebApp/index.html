@@ -44,14 +44,13 @@
               <!--Change in Speed Graph-->
               {% include 'WebApp/delta_speed_graph.html' %}
             </div>
+            <!-- Recalculate the height of the background gradient if it loaded slowly-->
+            <script src="{% static 'WebApp/refresh_height.js' %}"></script>
           {% else %}
             <div class="emptydb_error">
               Uh-Oh! It seems your database is empty and therefore we have no data to display!
             </div>
           {% endif %}
-        {% else %}
-        <!-- Keep gradient background on empty page-->
-        <div style="height: 100vh; "></div>
         {% endif %}
       </div>
     </body>
