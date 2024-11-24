@@ -16,8 +16,11 @@ def ping(request):
 def save(request):
     if request.method != "POST": return HttpResponse("Please use POST")
     try:
-        # \\r\\n seems to work as a divider wehn sending tests from Postman, this might have to change when recieving actual data from the microcontroller
-        speed_instances = str(request.body)[2:-1].split('\\n')
+        # \\r\\n seems to work as a divider when sending tests from Postman, this might have to change when recieving actual data from the microcontroller
+        # \\n works with the String in the arduino code since it's sending the "\n" as a literal
+        # Change it to "\n" once it's sending "\n" as new line
+        split_on = '\\n'
+        speed_instances = str(request.body)[2:-1].split(split_on)
         for instance in speed_instances:
             #print(instance)
             date_str = instance.partition(" ")[0].split("-")
@@ -145,7 +148,7 @@ def regenerate_analysis():
         generate_table()
         # Generate graph of vehicle detection frequencies
         generate_frequency_graph()
-        
+        # Generate graph of vehicle changes in speed
         generate_delta_speed_graph()
         return 1
     else:
