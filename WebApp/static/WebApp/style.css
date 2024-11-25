@@ -109,28 +109,25 @@ html {
     background-color: #161616;
     font-family: "Poppins", sans-serif;
     bottom: 0px;
-    height: 8vh;
-    width: 90%;
-    padding-left: 5%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 0px 0px;
     flex-wrap: wrap;
     align-items: center;
-    margin: 0px 5% 0px 5%;
+    padding: 1% 5% 1% 2%;
 }
 
 .navbar h2 {
-    font-size: 200%;
-    width: 15%;
+    display: block;
+    font-size: 1.8rem;
+    width: 25%;
     color: white;
     bottom: 5%;
-
 }
 
 .navbar a {
     width: 5%;
-    font-size: 200%;
+    font-size: 1.5rem;
     color: white;
     /* Adjust padding for spacing */
     text-decoration: none;
