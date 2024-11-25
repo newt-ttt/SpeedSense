@@ -148,6 +148,7 @@ def generate_delta_speed_graph():
             non_speeders_y.append(ds)
             non_speeders_x.append(ms)
 
+    # Red dots for speeders, blue dots for non-speeders
     fig = go.Figure(go.Scatter(
     name="Non-Speeding Vehicle",
     x=non_speeders_x,
