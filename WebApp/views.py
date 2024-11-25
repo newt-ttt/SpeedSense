@@ -84,8 +84,9 @@ def generate_table():
     
     # Sets background to be transparent when loaded in html
     fig.update_layout(
+        height=500,
         font_family="Poppins",
-        title=dict(text="All Recently Recorded Vehicles, sorted by date", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
+        title=dict(text="All Recently Recorded Vehicles", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
         template='plotly_dark',
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgb(25, 42, 66, 0.2)'
@@ -112,14 +113,17 @@ def generate_frequency_graph():
     ))
 
     fig.update_layout(
+        height=550,
         font_family="Poppins",
         title=dict(text="Vehicle Occurrences by Hour", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
         xaxis_title="Time of Day (Hours)",
         xaxis_title_font_size=20,
+        xaxis_tickfont_size=16,
         yaxis_title="# of Vehicles",
         yaxis_title_font_size=20,
+        yaxis_tickfont_size=16,
         xaxis=dict(tickmode="array", tickvals=list(freq_by_hour.keys())),
-        yaxis=dict(tickmode="array", tickvals=[5*n for n in range(0, 2+max([n for n in freq_by_hour.values()])//5)]),
+        yaxis=dict(tickmode="array", tickvals=[10*n for n in range(0, 2+max([n for n in freq_by_hour.values()])//10)]),
         template='plotly_dark',
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(25, 42, 66, 0.2)'
@@ -168,12 +172,15 @@ def generate_delta_speed_graph():
     ))
     
     fig.update_layout(
+    height=550,
     font_family="Poppins",
-    title=dict(text="Vehicle Changes in Speed", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
+    title=dict(text="Change in Speed per Vehicle", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
     xaxis_title="Maximum Speed",
     xaxis_title_font_size=20,
+    xaxis_tickfont_size=16,
     yaxis_title="Change in speed",
     yaxis_title_font_size=20,
+    yaxis_tickfont_size=16,
     xaxis=dict(tickmode="array", tickvals=[2.5*n for n in range(0,2+int(max(max_speeds)/2.5))]),
     template='plotly_dark',
     plot_bgcolor='rgba(0,0,0,0)',
