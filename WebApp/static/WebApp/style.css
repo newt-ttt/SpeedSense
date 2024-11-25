@@ -15,6 +15,7 @@ header h4 {
 body,
 html {
     height: 100%;
+    width: 100%;
     margin: 0;
 }
 
@@ -32,6 +33,7 @@ html {
     background-image: linear-gradient(#161616, #000e1f, #000e1f);
     /* Full height */
     height: fit-content;
+    width: 100%;
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
@@ -99,7 +101,7 @@ html {
 }
 
 .graph {
-    pointer-events: none;
+    margin: 1% 5% 0% 5%;
 }
 
 .navbar {
@@ -107,30 +109,28 @@ html {
     background-color: #161616;
     font-family: "Poppins", sans-serif;
     bottom: 0px;
-    max-width: 100%;
+    height: 8vh;
+    width: 90%;
+    padding-left: 5%;
     display: flex;
-    /* Flexbox for horizontal alignment */
     justify-content: space-between;
-    /* Space between items */
-    /* Vertical centering */
     padding: 0px 0px;
     flex-wrap: wrap;
     align-items: center;
+    margin: 0px 5% 0px 5%;
 }
 
 .navbar h2 {
     font-size: 200%;
-    height: 80%;
-    width: 20%;
+    width: 15%;
     color: white;
-    margin: 10px 5px;
     bottom: 5%;
+
 }
 
 .navbar a {
-    height: 80%;
     width: 5%;
-    font-size: 1.5em;
+    font-size: 200%;
     color: white;
     /* Adjust padding for spacing */
     text-decoration: none;

@@ -8,6 +8,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 import os
 
+speed_limit = 25 # Set this value to the speed limit in the zone
+speed_margin = 0 # Increase this value if you want to give some leeway in the visual representation of data i.e. at 0, 25.1mph is considered speeding and at 5, 30 is not considered speeding
 
 
 def ping(request):
@@ -19,7 +21,13 @@ def save(request):
         # \\r\\n seems to work as a divider when sending tests from Postman, this might have to change when recieving actual data from the microcontroller
         # \\n works with the String in the arduino code since it's sending the "\n" as a literal
         # Change it to "\n" once it's sending "\n" as new line
-        split_on = '\\n'
+        
+        try:
+            if request.headers['Postman-Token']:
+                split_on = '\\r\\n'
+        except:
+            split_on = '\\n'
+            
         speed_instances = str(request.body)[2:-1].split(split_on)
         for instance in speed_instances:
             #print(instance)
@@ -33,9 +41,13 @@ def save(request):
             # Save it to the table
             V.save()
         # Update the table
-        regenerate_analysis()
-    
-        return HttpResponse("VehicleInstance object has been sucessfully received and saved.")
+        try:
+            regenerate_analysis()
+        except:
+            print("Error generating analysis")
+            return HttpResponse("VehicleInstance objects have been successfully saved, but we ran into an error generating the analysis data.")
+            
+        return HttpResponse("VehicleInstance objects have been sucessfully received and saved.")
     except:
         return HttpResponse("There has been an error processing your request")
 
@@ -72,6 +84,8 @@ def generate_table():
     
     # Sets background to be transparent when loaded in html
     fig.update_layout(
+        font_family="Poppins",
+        title=dict(text="All Recently Recorded Vehicles, sorted by date", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
         template='plotly_dark',
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)'
@@ -81,7 +95,7 @@ def generate_table():
     return
 
 def generate_frequency_graph():
-    plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': True}
+    plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': False}
     freq_by_hour = {"00":0,"01":0,"02":0,"03":0,"04":0,"05":0,"06":0,"07":0,"08":0,"09":0,"10":0,"11":0, 
                     "12":0,"13":0,"14":0,"15":0,"16":0,"17":0,"18":0,"19":0,"20":0,"21":0,"22":0,"23":0}
     
@@ -98,10 +112,12 @@ def generate_frequency_graph():
     ))
 
     fig.update_layout(
-        title="Vehicle Occurrences by Hour",
+        font_family="Poppins",
+        title=dict(text="Vehicle Occurrences by Hour", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
         xaxis_title="Time of Day (Hours)",
         yaxis_title="Frequency",
         xaxis=dict(tickmode="array", tickvals=list(freq_by_hour.keys())),
+        yaxis=dict(tickmode="array", tickvals=[5*n for n in range(0, 2+max([n for n in freq_by_hour.values()])//5)]),
         template='plotly_dark',
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)'
@@ -119,23 +135,45 @@ def generate_delta_speed_graph():
     max_speeds = [round(max(speed), 1) for speed in speeds]
     delta_speeds = [round(max(speed)-min(speed), 1) for speed in speeds]
     
-    print(max_speeds)
-    print(delta_speeds)
+    speeders_x=[]
+    speeders_y=[]
+    non_speeders_x=[]
+    non_speeders_y=[]
     
-    fig = go.Figure(go.Bar(
-    x=max_speeds,
-    y=delta_speeds,
-    marker_color= '#0059CB'  # Bar color
+    for ms, ds in zip(max_speeds, delta_speeds):
+        if ms-ds > speed_limit+speed_margin:
+            speeders_y.append(ds)
+            speeders_x.append(ms)
+        else:
+            non_speeders_y.append(ds)
+            non_speeders_x.append(ms)
+
+    fig = go.Figure(go.Scatter(
+    name="Non-Speeding Vehicle",
+    x=non_speeders_x,
+    y=non_speeders_y,
+    marker_color= '#0059CB',  # Bar color
+    mode="markers"
+    ))
+
+    fig.add_trace(go.Scatter(
+    name="Speeding Vehicle",
+    x=speeders_x,
+    y=speeders_y,
+    marker_color= '#C22222',  # Bar color
+    mode="markers"
     ))
     
     fig.update_layout(
-    title="Vehicle Changes in Speed",
+    font_family="Poppins",
+    title=dict(text="Vehicle Changes in Speed", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
     xaxis_title="Maximum Speed",
     yaxis_title="Change in speed",
-    #xaxis=dict(tickmode="array", tickvals=list(freq_by_hour.keys())),
+    xaxis=dict(tickmode="array", tickvals=[2.5*n for n in range(0,2+int(max(max_speeds)/2.5))]),
     template='plotly_dark',
     plot_bgcolor='rgba(0,0,0,0)',
-    paper_bgcolor='rgba(0,0,0,0)'
+    paper_bgcolor='rgba(0,0,0,0)',
+    showlegend=True
     )
         
     fig.write_html('WebApp/templates/WebApp/delta_speed_graph.html', config=plotlyconfig, full_html=False, include_plotlyjs='cdn')

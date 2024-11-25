@@ -32,15 +32,15 @@
 
         {% if resource == "Analysis" %}
           {% if not db_empty %}
-            <div>
+            <div class='graph'>
               <!--Table-->
               {% include 'WebApp/table.html' %}
             </div>
-            <div>
+            <div class='graph'>
               <!--Frequency Graph-->
               {% include 'WebApp/frequency_graph.html' %}
             </div>
-            <div>
+            <div class='graph'>
               <!--Change in Speed Graph-->
               {% include 'WebApp/delta_speed_graph.html' %}
             </div>
