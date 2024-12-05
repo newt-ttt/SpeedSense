@@ -9,8 +9,11 @@ import plotly.graph_objects as go
 import os
 
 speed_limit = 25 # Set this value to the speed limit in the zone
-speed_margin = 1 # Increase this value if you want to give some leeway in the visual representation of data i.e. at 0, 25.1mph is considered speeding and at 5, 30 is not considered speeding
+speed_margin = 0 # Increase this value if you want to give some leeway in the visual representation of data i.e. at 0, 25.1mph is considered speeding and at 5, 30 is not considered speeding
 
+def debugthing(request):
+    print(request.headers["debug"])
+    return HttpResponse()
 
 def ping(request):
     return HttpResponse("pong")
@@ -31,7 +34,7 @@ def save(request):
         speed_instances = str(request.body)[2:-1].split(split_on)
         for instance in speed_instances:
             #print(instance)
-            date_str = instance.partition(" ")[0].split("-")
+            date_str = instance.partition(" ")[0].replace("/", "-").replace(":","-").split("-")
             if date_str[0] == '': continue# Last line of the text file tends to cause issues, ignore invalid ones
 
             V = VehicleInstance(date=datetime.datetime(int(date_str[0]), int(date_str[1]), int(date_str[2]), int(date_str[3]), int(date_str[4]), int(date_str[5])),
@@ -71,14 +74,14 @@ def index(request, resource=None):
 def generate_table():
     plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': False}
     # format all speed info into values and cells to make table
-    sorted_speeds = VehicleInstance.objects.order_by("-date")[:100]
+    sorted_speeds = VehicleInstance.objects.order_by("-date")[:1000]
     dates, ids, text = zip(*[(format_date(s.date), s.id, str(s.custom_text)) for s in sorted_speeds])
     
     speeds = [s.speeds.split(" ") for s in sorted_speeds]
     avg_speeds = [round(sum(float(s) for s in speed)/len(speed), 1) for speed in speeds]
     
     fig = go.Figure(data=[go.Table(
-        header=dict(values=['Instance ID', 'Speed', 'Time Recorded', 'Custom Text']),
+        header=dict(values=['Instance ID', 'Average Speed', 'Time Recorded', 'Custom Text']),
         cells=dict(values=[ids, avg_speeds, dates, text]))
     ])
     
@@ -100,7 +103,7 @@ def generate_frequency_graph():
     freq_by_hour = {"00":0,"01":0,"02":0,"03":0,"04":0,"05":0,"06":0,"07":0,"08":0,"09":0,"10":0,"11":0, 
                     "12":0,"13":0,"14":0,"15":0,"16":0,"17":0,"18":0,"19":0,"20":0,"21":0,"22":0,"23":0}
     
-    for instance in VehicleInstance.objects.order_by("-date")[:100]:
+    for instance in VehicleInstance.objects.order_by("-date").exclude(custom_text="MDR Demo Button")[:1000]:
         hour = str(instance.date.hour)
         if len(hour) == 1:
             hour="0"+hour
@@ -135,57 +138,44 @@ def generate_frequency_graph():
 def generate_delta_speed_graph():
     plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': False}
     
-    sorted_speeds = VehicleInstance.objects.order_by("-date")[:100]
+    sorted_speeds = VehicleInstance.objects.order_by("-date").exclude(custom_text="MDR Demo Button")[:500]
     speeds = [s.speeds.split(" ") for s in sorted_speeds]
     speeds = [[float(s) for s in speed] for speed in speeds]
     max_speeds = [round(max(speed), 1) for speed in speeds]
     delta_speeds = [round(max(speed)-min(speed), 1) for speed in speeds]
     
-    speeders_x=[]
-    speeders_y=[]
-    non_speeders_x=[]
-    non_speeders_y=[]
+    low_speed_avg = []
+    high_speed_avg = []
     
     for ms, ds in zip(max_speeds, delta_speeds):
-        if ms-ds > speed_limit+speed_margin:
-            speeders_y.append(ds)
-            speeders_x.append(ms)
+        if ms > speed_limit:
+            high_speed_avg.append(ds)
         else:
-            non_speeders_y.append(ds)
-            non_speeders_x.append(ms)
-
-    # Red dots for speeders, blue dots for non-speeders
-    fig = go.Figure(go.Scatter(
-    name="Non-Speeding Vehicle",
-    x=non_speeders_x,
-    y=non_speeders_y,
-    marker_color= '#0059CB',  # Bar color
-    mode="markers"
-    ))
-
-    fig.add_trace(go.Scatter(
-    name="Speeding Vehicle",
-    x=speeders_x,
-    y=speeders_y,
-    marker_color= '#C22222',  # Bar color
-    mode="markers"
+            low_speed_avg.append(ds)
+        
+    high_speed_avg = sum(high_speed_avg)/len(high_speed_avg)
+    low_speed_avg = sum(low_speed_avg)/len(low_speed_avg)
+    
+    fig = go.Figure(go.Bar(
+    x=[f"Low Speed (lower than {speed_limit} mph)", f"High Speed (higher than {speed_limit} mph)"],
+    y=[high_speed_avg, low_speed_avg],
+    width=0.4,
+    marker_color= '#0059CB'  # Bar color
     ))
     
     fig.update_layout(
     height=550,
     font_family="Poppins",
-    title=dict(text="Change in Speed per Vehicle", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
-    xaxis_title="Maximum Speed",
+    title=dict(text="Average Vehicle Change in Speed", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
+    xaxis_title="Vehicle Speed",
     xaxis_title_font_size=20,
     xaxis_tickfont_size=16,
-    yaxis_title="Change in speed",
+    yaxis_title="Change in Speed (mph)",
     yaxis_title_font_size=20,
     yaxis_tickfont_size=16,
-    xaxis=dict(tickmode="array", tickvals=[2.5*n for n in range(0,2+int(max(max_speeds)/2.5))]),
     template='plotly_dark',
     plot_bgcolor='rgba(0,0,0,0)',
-    paper_bgcolor='rgba(25, 42, 66, 0.2)',
-    showlegend=True
+    paper_bgcolor='rgba(25, 42, 66, 0.2)'
     )
         
     fig.write_html('WebApp/templates/WebApp/delta_speed_graph.html', config=plotlyconfig, full_html=False, include_plotlyjs='cdn')

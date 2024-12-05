@@ -8,4 +8,4 @@ class VehicleInstance(models.Model):
     date = models.DateTimeField(max_length=32)
     speeds = models.CharField(max_length=4096)
     direction = models.IntegerField(default=0)
-    custom_text = models.CharField(max_length=200)
+    custom_text = models.CharField(max_length=200, default="TEST")
