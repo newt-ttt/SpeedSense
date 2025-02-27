@@ -105,6 +105,11 @@ html {
     margin: 1% 5% 0% 5%;
 }
 
+.wifiform {
+    margin: 4% 5% 0% 5%;
+    color: #ffffff
+}
+
 .navbar {
     overflow: hidden;
     background-color: #161616;

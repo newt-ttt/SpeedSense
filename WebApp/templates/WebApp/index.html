@@ -51,6 +51,18 @@
               Uh-Oh! It seems your database is empty and therefore we have no data to display!
             </div>
           {% endif %}
+        {%elif resource == "Setup"%}
+          <!--Wifi SSID and PWD submission form-->
+          <div class="wifiform">
+            <form id="wifiform-form">
+              <label for="SSID">SSID:</label><br>
+              <input type="text" id="SSID" name="ssid"><br><br>
+              <label for="password">Password:</label><br>
+              <input type="password" id="PWD" name="pwd"><br><br>
+              <input type="submit" value="Submit">
+            </form>
+          </div>
+        <script src="{% static 'WebApp/setup.js' %}"></script>
         {% endif %}
       </div>
     </body>

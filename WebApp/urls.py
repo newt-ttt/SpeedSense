@@ -5,6 +5,7 @@ urlpatterns = [
     path("debugthing/", views.debugthing, name="debugthing"),
     path("ping/", views.ping, name="ping"),
     path("save/", views.save, name="save"),
+    path("submit/", views.submit, name="submit"),
     path("", views.index, name="index"),
     path("<str:resource>/", views.index, name="index")
     

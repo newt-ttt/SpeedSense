@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from WebApp.models import VehicleInstance
 
 import datetime
@@ -67,10 +67,19 @@ def index(request, resource=None):
         # This will generate the analysis graphs and table if there's any data in the ddatabase
         if not regenerate_analysis():
             context["db_empty"] = True
-
-    return HttpResponse(index_template.render(context, request))
-
-
+        return HttpResponse(index_template.render(context, request))
+    elif resource=="Setup":
+        return HttpResponse(index_template.render(context, request))
+    else:
+        raise Http404("Page does not exist")
+    
+def submit(request):
+    splitbody = str(request.body).split("\\r\\n")
+    SSID = splitbody[3]
+    PWD = splitbody[7]
+    print(f"ssid: {SSID}\npassword: {PWD}")
+    return HttpResponse("Recieved")
+    
 def generate_table():
     plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': False}
     # format all speed info into values and cells to make table
