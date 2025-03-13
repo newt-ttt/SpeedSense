@@ -21,4 +21,21 @@ form.addEventListener('submit', function(event) {
         .catch(error => {
             console.error('Error:', error);
         });
+
+    fetch("http://192.168.4.1:80/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain"
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Success:", data);
+            alert("Connection success, Please reconnect to your home network.")
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Connection failure, Please double check your WiFi credentials.");
+        });
 });
