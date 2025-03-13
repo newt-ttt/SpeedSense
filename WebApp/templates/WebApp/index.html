@@ -48,14 +48,23 @@
             <script src="{% static 'WebApp/refresh_height.js' %}"></script>
           {% else %}
             <div class="emptydb_error">
-              Uh-Oh! It seems your database is empty and therefore we have no data to display!
+              Uh-Oh! It seems your database is empty!
             </div>
           {% endif %}
         {%elif resource == "Setup"%}
           <!--Wifi SSID and PWD submission form-->
           <div class="wifiform">
+            <h4>Instructions for Setup</h4>
+            <ol>
+              <li>Power On the SpeedSense sign</li>
+              <li>Connect this device to the WiFi network "SpeedSense"</li>
+              <li>Enter your home (or other desired) WiFi name and password</li>
+              <li>Reconnect this device to your home WiFi</li>
+            </ol>
+          </div>
+          <div class="wifiform">
             <form id="wifiform-form">
-              <label for="SSID">SSID:</label><br>
+              <label for="SSID">Network Name:</label><br>
               <input type="text" id="SSID" name="ssid"><br><br>
               <label for="password">Password:</label><br>
               <input type="password" id="PWD" name="pwd"><br><br>

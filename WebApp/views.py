@@ -19,6 +19,7 @@ def ping(request):
     return HttpResponse("pong")
 
 def save(request):
+    print(request.body) # Debugging for CDR Demo (Printing results to console)
     if request.method != "POST": return HttpResponse("Please use POST")
     try:
         # \\r\\n seems to work as a divider when sending tests from Postman, this might have to change when recieving actual data from the microcontroller
@@ -30,15 +31,15 @@ def save(request):
                 split_on = '\\r\\n'
         except:
             split_on = '\\n'
-            
+        
         speed_instances = str(request.body)[2:-1].split(split_on)
         for instance in speed_instances:
             #print(instance)
             date_str = instance.partition(" ")[0].replace("/", "-").replace(":","-").split("-")
             if date_str[0] == '': continue# Last line of the text file tends to cause issues, ignore invalid ones
 
-            V = VehicleInstance(date=datetime.datetime(int(date_str[0]), int(date_str[1]), int(date_str[2]), int(date_str[3]), int(date_str[4]), int(date_str[5])),
-                                speeds=instance.partition(" ")[2],
+            V = VehicleInstance(date=datetime.datetime(2000+int(date_str[2]), int(date_str[0]), int(date_str[1]), int(date_str[3]), int(date_str[4]), int(date_str[5])),
+                                speeds=instance.partition(" ")[2].strip(),
                                 direction=request.headers["direction"],
                                 custom_text=request.headers["custom-text"])
             # Save it to the table
@@ -70,6 +71,8 @@ def index(request, resource=None):
         return HttpResponse(index_template.render(context, request))
     elif resource=="Setup":
         return HttpResponse(index_template.render(context, request))
+    elif resource=="Home":
+        return HttpResponse(index_template.render(context, request))
     else:
         raise Http404("Page does not exist")
     
@@ -83,7 +86,7 @@ def submit(request):
 def generate_table():
     plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': False}
     # format all speed info into values and cells to make table
-    sorted_speeds = VehicleInstance.objects.order_by("-date")[:1000]
+    sorted_speeds = VehicleInstance.objects.order_by("-date").exclude(speeds="")[:1000]
     dates, ids, text = zip(*[(format_date(s.date), s.id, str(s.custom_text)) for s in sorted_speeds])
     
     speeds = [s.speeds.split(" ") for s in sorted_speeds]
@@ -112,8 +115,9 @@ def generate_frequency_graph():
     freq_by_hour = {"00":0,"01":0,"02":0,"03":0,"04":0,"05":0,"06":0,"07":0,"08":0,"09":0,"10":0,"11":0, 
                     "12":0,"13":0,"14":0,"15":0,"16":0,"17":0,"18":0,"19":0,"20":0,"21":0,"22":0,"23":0}
     
-    for instance in VehicleInstance.objects.order_by("-date").exclude(custom_text="MDR Demo Button")[:1000]:
-        hour = str(instance.date.hour)
+    for instance in VehicleInstance.objects.order_by("-date").exclude(speeds="")[:1000]:
+        date = instance.date - datetime.timedelta(hours=4)
+        hour = str(date.hour)
         if len(hour) == 1:
             hour="0"+hour
         freq_by_hour[hour]+=1
@@ -147,11 +151,11 @@ def generate_frequency_graph():
 def generate_delta_speed_graph():
     plotlyconfig = {'responsive': True, 'scrollZoom': False, 'staticPlot': False}
     
-    sorted_speeds = VehicleInstance.objects.order_by("-date").exclude(custom_text="MDR Demo Button")[:500]
+    sorted_speeds = VehicleInstance.objects.order_by("-date").exclude(speeds="")[:500]
     speeds = [s.speeds.split(" ") for s in sorted_speeds]
     speeds = [[float(s) for s in speed] for speed in speeds]
     max_speeds = [round(max(speed), 1) for speed in speeds]
-    delta_speeds = [round(max(speed)-min(speed), 1) for speed in speeds]
+    delta_speeds = [round(speed[0]-speed[-1], 1) for speed in speeds]
     
     low_speed_avg = []
     high_speed_avg = []
@@ -162,8 +166,8 @@ def generate_delta_speed_graph():
         else:
             low_speed_avg.append(ds)
         
-    high_speed_avg = sum(high_speed_avg)/len(high_speed_avg)
-    low_speed_avg = sum(low_speed_avg)/len(low_speed_avg)
+    high_speed_avg = 0 if not len(high_speed_avg) else sum(high_speed_avg)/len(high_speed_avg)
+    low_speed_avg = 0 if not len(low_speed_avg) else sum(low_speed_avg)/len(low_speed_avg)
     
     fig = go.Figure(go.Bar(
     x=[f"Low Speed (lower than {speed_limit} mph)", f"High Speed (higher than {speed_limit} mph)"],
@@ -175,7 +179,7 @@ def generate_delta_speed_graph():
     fig.update_layout(
     height=550,
     font_family="Poppins",
-    title=dict(text="Average Vehicle Change in Speed", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
+    title=dict(text="Average Decrease in Vehicle Speed", font=dict(size=28), automargin=True, yref='container', x=0.5, y=0.9, yanchor='top'),
     xaxis_title="Vehicle Speed",
     xaxis_title_font_size=20,
     xaxis_tickfont_size=16,
@@ -198,13 +202,14 @@ def regenerate_analysis():
         # Generate graph of vehicle detection frequencies
         generate_frequency_graph()
         # Generate graph of vehicle changes in speed
-        generate_delta_speed_graph()
+        generate_delta_speed_graph() # this line is getting freaky 
         return 1
     else:
         # This makes us not throw an error if we try to open the index page w/ nothing in the DB
         return 0
 
 def format_date(date: datetime.datetime):
+    date = date - datetime.timedelta(hours=4)
     ampm = "PM" if date.hour//12 else "AM"
     if date.hour%12 ==0:
         hour=12

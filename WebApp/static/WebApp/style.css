@@ -107,7 +107,8 @@ html {
 
 .wifiform {
     margin: 4% 5% 0% 5%;
-    color: #ffffff
+    color: #ffffff;
+    font-size: large;
 }
 
 .navbar {
