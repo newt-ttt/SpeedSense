@@ -1,2 +1,2 @@
 cd ../
-python pagekite.py 8000 speedsensesdp.pagekite.me
+python pagekite.py 8000 speedsense.pagekite.me
