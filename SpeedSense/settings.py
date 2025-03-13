@@ -34,7 +34,7 @@ SECRET_KEY = DJANGO_SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ "127.0.0.1", "speedsensesdp.pagekite.me"]
+ALLOWED_HOSTS = [ "127.0.0.1", "speedsensesdp.pagekite.me", "speedsense.pagekite.me"]
 
 
 # Application definition
