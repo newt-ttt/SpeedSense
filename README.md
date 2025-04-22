@@ -112,7 +112,7 @@ Don't worry if you don't have a secret_tokens.py file yet -- it will be generate
 
 ### Prerequisites
 
-To run this application, you'll need Python. You can download the latest version [here](https://www.python.org/downloads/)
+To run this application, you'll need Git and Python. You can download the latest version [here](https://www.python.org/downloads/)
 
 
 ### Installation
@@ -126,7 +126,7 @@ To run this application, you'll need Python. You can download the latest version
    python -m pip install -r requirements.txt
    ```
 
-3. Run the following commands separately
+3. Run the following commands in this order
    ```sh
     python manage.py makemigrations WebApp
     python manage.py migrate
@@ -147,16 +147,19 @@ To tunnel with pagekite, we provided the host.bat file in order to make things e
 
 
 ### Communicating with a Speed Sense device
-1. Not yet implemented
+Navigate to the Setup section of the web app in order to begin communicating with your Speed Sense device.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
+* Attack the Speed Sense device to a pole or tree 6+ feet from the ground, aimed towards oncoming traffic for best results.
 ### Setup
-Navigate to the Setup section of the web app in order to begin communicating with your Speed Sense device.
-
+Instructions for Setup
+1. Power On the SpeedSense sign
+2. Connect this device to the WiFi network "SpeedSense"
+3. Enter your home (or other desired) WiFi name and password
+4. Reconnect this device to your home WiFi
 ### Analysis
 We provide multiple insights into the traffic in your area through Speed Sense, such as:
 
@@ -216,6 +219,7 @@ Project Link: [https://websites.umass.edu/ece-sdp/sdp25-team-18/](https://websit
 ## Acknowledgments
 
 * Our team advisor, Professor Beatriz Lorenzo
+* Our evaluators, Professor Jun Yao and Professor Daniel Holcomb
 * UMass Amherst ECE Department for the excellent help along the way
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
