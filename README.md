@@ -117,7 +117,7 @@ To run this application, you'll need Git and Python. You can download the latest
 
 ### Installation
 
-1. Clone the repo
+1. Download the latest release or clone this repository
    ```sh
    git clone https://github.com/newt-ttt/SpeedSense.git
    ```
