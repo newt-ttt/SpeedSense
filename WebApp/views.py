@@ -2,11 +2,10 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, Http404
 from WebApp.models import VehicleInstance
+from django.shortcuts import redirect
 
 import datetime
-import plotly.express as px
 import plotly.graph_objects as go
-import os
 
 speed_limit = 25 # Set this value to the speed limit in the zone
 speed_margin = 0 # Increase this value if you want to give some leeway in the visual representation of data i.e. at 0, 25.1mph is considered speeding and at 5, 30 is not considered speeding
@@ -58,20 +57,18 @@ def save(request):
         
 def index(request, resource=None):
     index_template = loader.get_template('WebApp/index.html')
-    context={"show_splash": False, "resource": resource, "db_empty": False}
+    context={"show_splash": True, "resource": resource, "db_empty": False}
     
     # change context to provide variables to the template
     if not resource:
-        context["show_splash"] = True
-        return HttpResponse(index_template.render(context, request))
-    elif resource=="Analysis":
+        context[resource]="Setup"
+        return redirect("/Setup")
+    if resource=="Analysis":
         # This will generate the analysis graphs and table if there's any data in the ddatabase
         if not regenerate_analysis():
             context["db_empty"] = True
         return HttpResponse(index_template.render(context, request))
     elif resource=="Setup":
-        return HttpResponse(index_template.render(context, request))
-    elif resource=="Home":
         return HttpResponse(index_template.render(context, request))
     else:
         raise Http404("Page does not exist")
@@ -80,7 +77,8 @@ def submit(request):
     splitbody = str(request.body).split("\\r\\n")
     SSID = splitbody[3]
     PWD = splitbody[7]
-    print(f"ssid: {SSID}\npassword: {PWD}")
+    speed_limit = splitbody[11]
+    print(f"ssid: {SSID}\npassword: {PWD}\nspeed limit: {speed_limit}")
     return HttpResponse("Recieved")
     
 def generate_table():

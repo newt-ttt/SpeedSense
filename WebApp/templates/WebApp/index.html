@@ -24,7 +24,6 @@
 
         <div class="navbar">
           <h2>Speed Sense</h2>
-          <a href="/Home">Home</a>
           <a href="/Setup">Setup</a>
           <a href="/Analysis">Analysis</a>
           <a href="https://github.com/newt-ttt/SpeedSense?tab=readme-ov-file">About Us</a>
@@ -60,6 +59,7 @@
               <li>Connect this device to the WiFi network "SpeedSense"</li>
               <li>Enter your home (or other desired) WiFi name and password</li>
               <li>Reconnect this device to your home WiFi</li>
+              <li>Optionally, enter the speed limit for speed warning & analytics</li>
             </ol>
           </div>
           <div class="wifiform">
@@ -68,7 +68,10 @@
               <input type="text" id="SSID" name="ssid"><br><br>
               <label for="password">Password:</label><br>
               <input type="password" id="PWD" name="pwd"><br><br>
+              <label for="speedlimit">Speed Limit (Default=25mph):</label><br>
+              <input type="text" id="SPEEDLIM" name="speedlimit"><br><br>
               <input type="submit" value="Submit">
+
             </form>
           </div>
         <script src="{% static 'WebApp/setup.js' %}"></script>

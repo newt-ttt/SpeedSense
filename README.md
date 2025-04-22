@@ -32,7 +32,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/newt-ttt/SpeedSense">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="SpeedSense.jpg" alt="Logo" width="120" height="100">
   </a>
 
 <h3 align="center">Speed Sense</h3>
@@ -240,7 +240,6 @@ Project Link: [https://websites.umass.edu/ece-sdp/sdp25-team-18/](https://websit
 [license-url]: https://github.com/newt-ttt/SpeedSense/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
 [django]:https://www.djangoproject.com/m/img/badges/djangopowered126x54.gif
 [django-url]:https://www.djangoproject.com/
 
