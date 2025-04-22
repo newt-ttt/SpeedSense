@@ -134,16 +134,16 @@ To run this application, you'll need Python. You can download the latest version
    ```
 By default, the server will start locally at http://127.0.0.1:8000/
 
-### Tunneling (Irrelevant in final version)
+### Tunneling
 To tunnel with pagekite, we provided the host.bat file in order to make things easier:
 
-1. Download 'pagekite.py' from pagekite & place it in the same directory as the root SpeedSense folder (NOT INSIDE IT)
+1. Download 'pagekite.py' from [pagekite](https://pagekite.net/) & place it in the same directory as the root SpeedSense folder (NOT INSIDE IT)
 
-2. Add your credentials to your pagekite installation (see pagekite documentation)
+2. Add your credentials to your pagekite installation (see [pagekite documentation](https://pagekite.net/wiki/))
 
-3. (OPTIONAL) Modify 'host.bat' to point to your own pagekite URL
+3. Modify 'host.bat' to point to your own pagekite URL
 
-4. Run '.\host.bat' to make the server accessible at 'speedsense.pagekite.me' (Or your own pagekite URL)
+4. Run './host.bat' to make the server accessible at 'speedsense.pagekite.me' (Or your own pagekite URL)
 
 
 ### Communicating with a Speed Sense device
@@ -162,9 +162,9 @@ We provide multiple insights into the traffic in your area through Speed Sense, 
 
 * A table of all recent recorded average vehicle speeds alongside the date & time recorded
 * Graphs displaying:
+  * A table of all passing vehicles and their average speed
   * The number of vehicles passing by at any time of day
   * The average change in speed of passing vehicles
-  * The average speed at any time of day
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
