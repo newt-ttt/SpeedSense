@@ -112,12 +112,12 @@ Don't worry if you don't have a secret_tokens.py file yet -- it will be generate
 
 ### Prerequisites
 
-To run this application, you'll need Git and Python. You can download the latest version of Python [here](https://www.python.org/downloads/) and Git [here](https://git-scm.com/downloads)
+To run this application, you'll need Python and optionally Git. You can download the latest version of Python [here](https://www.python.org/downloads/) and Git [here](https://git-scm.com/downloads)
 
 
 ### Installation
 
-1. Download the latest release or clone this repository
+1. Download the latest release or clone this repository with Git
    ```sh
    git clone https://github.com/newt-ttt/SpeedSense.git
    ```
