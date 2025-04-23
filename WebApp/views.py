@@ -116,9 +116,20 @@ def generate_frequency_graph():
     for instance in VehicleInstance.objects.order_by("-date").exclude(speeds="")[:1000]:
         date = instance.date - datetime.timedelta(hours=4)
         hour = str(date.hour)
+        
+        speeds = instance.speeds.split(" ")
+        speeds = [float(s)/(2*2.237) for s in speeds]
+        count=1
+        dist=0
+        for speed in speeds:
+            dist+=speed
+            if dist>=25:
+                count+=1
+                dist=0
+            
         if len(hour) == 1:
             hour="0"+hour
-        freq_by_hour[hour]+=1
+        freq_by_hour[hour]+=count
         
     fig = go.Figure(go.Bar(
     x=list(freq_by_hour.keys()),  # Hours as x-axis
