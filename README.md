@@ -112,7 +112,7 @@ Don't worry if you don't have a secret_tokens.py file yet -- it will be generate
 
 ### Prerequisites
 
-To run this application, you'll need Git and Python. You can download the latest version [here](https://www.python.org/downloads/)
+To run this application, you'll need Git and Python. You can download the latest version of Python [here](https://www.python.org/downloads/) and Git [here](https://git-scm.com/downloads)
 
 
 ### Installation
@@ -153,7 +153,8 @@ Navigate to the Setup section of the web app in order to begin communicating wit
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-* Attach the Speed Sense device to a pole or tree 6+ feet from the ground, aimed towards oncoming traffic for best results.
+* Attach the Speed Sense device to a pole 5+ feet from the ground, aimed directly towards oncoming traffic for best results.
+* We recommend attaching the solar panel to the same pole and aiming it roughly east, ideally in a sunny area.
 ### Setup
 Instructions for Setup
 1. Power On the SpeedSense sign
