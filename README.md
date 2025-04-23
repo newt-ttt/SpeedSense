@@ -204,11 +204,11 @@ Contact us through the UMass Amherst Electrical & Computer Engineering Dept. or 
 
 Alex Johnson (Software Lead) - abjohnson@umass.edu
 
-Sam Chicoine - 	schicoine@umass.edu
+Sam Chicoine (Logistics Lead) - schicoine@umass.edu
 
-Kyle Greenwood - khgreenwood@umass.edu
+Kyle Greenwood (Budget Lead) - khgreenwood@umass.edu
 
-Nate Robinson - njrobinson@umass.edu
+Nate Robinson (PCB Lead) - njrobinson@umass.edu
 
 Project Link: [https://websites.umass.edu/ece-sdp/sdp25-team-18/](https://websites.umass.edu/ece-sdp/sdp25-team-18/)
 
