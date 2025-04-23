@@ -153,7 +153,7 @@ Navigate to the Setup section of the web app in order to begin communicating wit
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-* Attack the Speed Sense device to a pole or tree 6+ feet from the ground, aimed towards oncoming traffic for best results.
+* Attach the Speed Sense device to a pole or tree 6+ feet from the ground, aimed towards oncoming traffic for best results.
 ### Setup
 Instructions for Setup
 1. Power On the SpeedSense sign
