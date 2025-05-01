@@ -43,7 +43,7 @@ html {
 
 .intro {
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
@@ -113,10 +113,12 @@ html {
 
 .navbar {
     overflow: hidden;
+    position: fixed;
+    top: 0px;
     background-color: #161616;
     font-family: "Poppins", sans-serif;
-    bottom: 0px;
     width: 100%;
+    z-index: 999;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
