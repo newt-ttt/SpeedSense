@@ -10,13 +10,6 @@ import plotly.graph_objects as go
 speed_limit = 25 # Set this value to the speed limit in the zone
 speed_margin = 0 # Increase this value if you want to give some leeway in the visual representation of data i.e. at 0, 25.1mph is considered speeding and at 5, 30 is not considered speeding
 
-def debugthing(request):
-    print(request.headers["debug"])
-    return HttpResponse()
-
-def ping(request):
-    return HttpResponse("pong")
-
 def save(request):
     print(request.body) # Debugging for CDR Demo (Printing results to console)
     if request.method != "POST": return HttpResponse("Please use POST")
@@ -235,3 +228,7 @@ def format_date(date: datetime.datetime):
     else:
         second=date.second
     return f'{date.month}-{date.day}-{date.year} {hour}:{minute}:{second} {ampm}'
+    
+def debug(request):
+    print(request.headers["debug"])
+    return HttpResponse()
